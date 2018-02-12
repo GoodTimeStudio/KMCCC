@@ -53,7 +53,7 @@
 		}
 
 		/// <summary>
-		///     游戏根目录
+		///     游戏核心根目录 (通常包含versions, libraries, assets等文件夹)
 		/// </summary>
 		public string GameRootPath { get; private set; }
 
@@ -143,7 +143,7 @@
 		}
 
 		/// <summary>
-		///     游戏根目录
+		///     游戏核心根目录
 		/// </summary>
 		public string GameRootPath { get; internal set; }
 

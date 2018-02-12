@@ -13,6 +13,11 @@
 	/// </summary>
 	public sealed class LaunchOptions
 	{
+        /// <summary>
+        ///     游戏运行目录 (通常包含saves, texturepacks, mods等文件夹)
+        /// </summary>
+        public string GameDirPath { get; set; }
+
 		/// <summary>
 		///     最大内存
 		/// </summary>

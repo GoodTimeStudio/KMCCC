@@ -28,6 +28,11 @@
 			AdvencedArguments = new List<string>();
 		}
 
+        /// <summary>
+        ///     游戏运行目录
+        /// </summary>
+        public string GameDir { get; set; }
+
 		/// <summary>
 		///     主类
 		/// </summary>

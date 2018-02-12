@@ -34,6 +34,7 @@
                 args.AgentPath = options.AgentPath;
                 args.MinMemory = options.MinMemory;
 				args.NativePath = GameRootPath + @"\$natives";
+                args.GameDir = options.GameDirPath;
 				foreach (var native in options.Version.Natives)
 				{
 					var exp = ZipTools.UnzipFile(this.GetNativePath(native), args.NativePath, native.Options);
@@ -55,12 +56,12 @@
 				args.Libraries.Add(this.GetVersionJarPath(options.Version.JarId));
 				args.MinecraftArguments = options.Version.MinecraftArguments;
 
-                string AssetsPath = options.Version.Assets == "legacy" ? "assets\\virtual\\legacy" : "assets";
+                string AssetsPath = GameRootPath + @"\" + (options.Version.Assets == "legacy" ? "assets\\virtual\\legacy" : "assets");
                 args.Tokens.Add("auth_access_token", authentication.AccessToken.GoString());
 				args.Tokens.Add("auth_session", authentication.AccessToken.GoString());
 				args.Tokens.Add("auth_player_name", authentication.DisplayName);
 				args.Tokens.Add("version_name", options.Version.Id);
-				args.Tokens.Add("game_directory", ".");
+				args.Tokens.Add("game_directory", options.GameDirPath ?? GameRootPath);
                 args.Tokens.Add("game_assets", AssetsPath);
                 args.Tokens.Add("assets_root", AssetsPath);
                 args.Tokens.Add("assets_index_name", options.Version.Assets);
@@ -132,7 +133,7 @@
 					{
 						Arguments = args.ToArguments(),
 						UseShellExecute = false,
-						WorkingDirectory = GameRootPath,
+						WorkingDirectory = args.GameDir ?? GameRootPath,
 						RedirectStandardError = true,
 						RedirectStandardOutput = true
 					})
