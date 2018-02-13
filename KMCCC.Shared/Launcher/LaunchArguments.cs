@@ -117,12 +117,12 @@
 			}
             if (G1GCENabled)
             {
-                sb.Append("-XX:+UnlockExperimentalVMOptions");
-                sb.Append("-XX:+UseG1GC");
-                sb.Append("-XX:G1NewSizePercent=20");
-                sb.Append("-XX:G1ReservePercent=20");
-                sb.Append("-XX:MaxGCPauseMillis=50");
-                sb.Append("-XX:G1HeapRegionSize=16M");
+                sb.Append(" -XX:+UnlockExperimentalVMOptions ");
+                sb.Append(" -XX:+UseG1GC ");
+                sb.Append(" -XX:G1NewSizePercent=20 ");
+                sb.Append(" -XX:G1ReservePercent=20 ");
+                sb.Append(" -XX:MaxGCPauseMillis=50 ");
+                sb.Append(" -XX:G1HeapRegionSize=16M ");
             }
             if (MinMemory > 0)
 			{
