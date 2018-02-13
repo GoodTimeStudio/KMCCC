@@ -112,6 +112,7 @@
 					return null;
 				}
 				version.Id = jver.Id;
+                version.Type = jver.Type;
                 version.MinecraftArguments = jver.MinecraftArguments ?? UsefulTools.PrintfArray(jver.arguments.game);
                 version.Assets = jver.Assets;
 				version.MainClass = jver.MainClass;

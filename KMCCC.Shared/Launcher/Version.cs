@@ -42,6 +42,11 @@
 		/// </summary>
 		public string Id { get; set; }
 
+        /// <summary>
+        /// 版本类型
+        /// </summary>
+        public string Type { get; set; }
+
 		/// <summary>
 		///     主启动参数
 		/// </summary>
