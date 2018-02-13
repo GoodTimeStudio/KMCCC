@@ -23,7 +23,8 @@
 		/// </summary>
 		public MinecraftLaunchArguments()
 		{
-			CGCEnabled = true;
+            CGCEnabled = false;
+            G1GCENabled = true;
 			Tokens = new Dictionary<string, string>();
 			AdvencedArguments = new List<string>();
 		}
@@ -59,9 +60,15 @@
         public string AgentPath { get; set; }
 
         /// <summary>
-        ///     默认true，不要作死去设置成false
+        ///     CGC已在JDK 9中被移除，使用CGC将导致无法创建JVM虚拟机
+        ///     建议使用G1GC代替
         /// </summary>
-        public bool CGCEnabled { get; set; }
+        [Obsolete] public bool CGCEnabled { get; set; }
+
+       /// <summary>
+       ///      默认true，如无必要请勿设置为false
+       /// </summary>
+        public bool G1GCENabled { get; set; }
 
 		/// <summary>
 		///     本地dll文件地址
@@ -108,7 +115,16 @@
 			{
 				sb.Append("-Xincgc");
 			}
-			if (MinMemory > 0)
+            if (G1GCENabled)
+            {
+                sb.Append("-XX:+UnlockExperimentalVMOptions");
+                sb.Append("-XX:+UseG1GC");
+                sb.Append("-XX:G1NewSizePercent=20");
+                sb.Append("-XX:G1ReservePercent=20");
+                sb.Append("-XX:MaxGCPauseMillis=50");
+                sb.Append("-XX:G1HeapRegionSize=16M");
+            }
+            if (MinMemory > 0)
 			{
 				sb.Append(" -Xms").Append(MinMemory).Append("M ");
 			}

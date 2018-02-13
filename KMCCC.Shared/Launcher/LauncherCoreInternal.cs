@@ -28,7 +28,6 @@
 						ErrorType = ErrorType.AuthenticationFailed,
 						ErrorMessage = "验证错误: " + authentication.Error
 					};
-				args.CGCEnabled = true;
 				args.MainClass = options.Version.MainClass;
 				args.MaxMemory = options.MaxMemory;
                 args.AgentPath = options.AgentPath;
