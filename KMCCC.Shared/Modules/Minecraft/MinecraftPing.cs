@@ -1,10 +1,10 @@
-﻿using LitJson;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace KMCCC.Modules.Minecraft
 {
@@ -86,7 +86,7 @@ namespace KMCCC.Modules.Minecraft
                     safejson += "\"}";
                 try
                 {
-                    OnPingReceived?.Invoke(JsonMapper.ToObject<PingPayload>(safejson));
+                    OnPingReceived?.Invoke(JsonConvert.DeserializeObject<PingPayload>(safejson));
                 }
                 catch
                 {

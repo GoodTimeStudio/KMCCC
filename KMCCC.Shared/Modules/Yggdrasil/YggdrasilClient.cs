@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using LitJson;
+using Newtonsoft.Json;
 using System.IO;
 
 namespace KMCCC.Modules.Yggdrasil
@@ -91,7 +91,7 @@ namespace KMCCC.Modules.Yggdrasil
                 {
                     using (WebClient wc = new WebClient())
                     {
-                        var requestBody = JsonMapper.ToJson(new RefreshRequest
+                        var requestBody = JsonConvert.SerializeObject(new RefreshRequest
                         {
                             Agent = Agent.Minecraft,
                             AccessToken = AccessToken.ToString("N"),
@@ -99,7 +99,7 @@ namespace KMCCC.Modules.Yggdrasil
                             ClientToken = ClientToken.ToString("N")
                         });
                         var responseBody = wc.UploadString(new Uri(Auth_Refresh), requestBody);
-                        var response = JsonMapper.ToObject<AuthenticationResponse>(responseBody);
+                        var response = JsonConvert.DeserializeObject<AuthenticationResponse>(responseBody);
                         if (response.AccessToken == null)
                         {
                             return new Exception("获取AccessToken失败");
@@ -118,7 +118,7 @@ namespace KMCCC.Modules.Yggdrasil
                     {
                         using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream(), true))
                         {
-                            var ErrorJson = JsonMapper.ToObject<AuthenticationResponse>(sr.ReadToEnd());
+                            var ErrorJson = JsonConvert.DeserializeObject<AuthenticationResponse>(sr.ReadToEnd());
                             return new Exception(ErrorJson.ErrorMessage);
                         }
                     }
@@ -139,7 +139,7 @@ namespace KMCCC.Modules.Yggdrasil
                 {
                     using (WebClient wc = new WebClient())
                     {
-                        var requestBody = JsonMapper.ToJson(new RefreshRequest
+                        var requestBody = JsonConvert.SerializeObject(new RefreshRequest
                         {
                             Agent = Agent.Minecraft,
                             AccessToken = accessToken.ToString("N"),
@@ -147,7 +147,7 @@ namespace KMCCC.Modules.Yggdrasil
                             ClientToken = ClientToken.ToString("N")
                         });
                         var responseBody = wc.UploadString(new Uri(Auth_Refresh), requestBody);
-                        var response = JsonMapper.ToObject<AuthenticationResponse>(responseBody);
+                        var response = JsonConvert.DeserializeObject<AuthenticationResponse>(responseBody);
                         if (response.AccessToken == null)
                         {
                             return new Exception("获取AccessToken失败");
@@ -166,7 +166,7 @@ namespace KMCCC.Modules.Yggdrasil
                     {
                         using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream(), true))
                         {
-                            var ErrorJson = JsonMapper.ToObject<AuthenticationResponse>(sr.ReadToEnd());
+                            var ErrorJson = JsonConvert.DeserializeObject<AuthenticationResponse>(sr.ReadToEnd());
                             return new Exception(ErrorJson.ErrorMessage);
                         }
                     }
@@ -190,7 +190,7 @@ namespace KMCCC.Modules.Yggdrasil
                     Http.Method = "POST";
                     Http.ContentType = "application/json";
                     Http.Timeout = 100000;
-                    var requestBody = JsonMapper.ToJson(new ValidateRequest
+                    var requestBody = JsonConvert.SerializeObject(new ValidateRequest
                     {
                         AccessToken = accessToken.ToString("N"),
                         ClientToken = ClientToken.ToString("N"),
@@ -218,7 +218,7 @@ namespace KMCCC.Modules.Yggdrasil
                         else
                         {
                             StreamReader sr = new StreamReader(hwr.GetResponseStream());
-                            var response = JsonMapper.ToObject<Error>(sr.ReadToEnd());
+                            var response = JsonConvert.DeserializeObject<Error>(sr.ReadToEnd());
                             return new Exception(response.ErrorMessage);
                         }
                     }   
@@ -230,7 +230,7 @@ namespace KMCCC.Modules.Yggdrasil
                     {
                         using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream(), true))
                         {
-                            var ErrorJson = JsonMapper.ToObject<Error>(sr.ReadToEnd());
+                            var ErrorJson = JsonConvert.DeserializeObject<Error>(sr.ReadToEnd());
                             return new Exception(ErrorJson.ErrorMessage);
                         }
                     }
@@ -256,7 +256,7 @@ namespace KMCCC.Modules.Yggdrasil
                     using (WebClient wc = new WebClient())
                     {
                         wc.Headers.Add("Content-Type", "application/json");
-                        var requestBody = JsonMapper.ToJson(new AuthenticationRequest
+                        var requestBody = JsonConvert.SerializeObject(new AuthenticationRequest
                         {
                             Agent = Agent.Minecraft,
                             Email = email,
@@ -266,7 +266,7 @@ namespace KMCCC.Modules.Yggdrasil
                             ClientToken = ClientToken.ToString("N")
                         });
                         var responseBody = wc.UploadString(new Uri(Auth_Authentication), requestBody);
-                        var response = JsonMapper.ToObject<AuthenticationResponse>(responseBody);
+                        var response = JsonConvert.DeserializeObject<AuthenticationResponse>(responseBody);
                         if (response.AccessToken == null)
                         {
                             return new Exception("获取AccessToken失败");
@@ -286,7 +286,7 @@ namespace KMCCC.Modules.Yggdrasil
                         using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream(), true))
                         {
 
-                            var ErrorJson = JsonMapper.ToObject<AuthenticationResponse>(sr.ReadToEnd());
+                            var ErrorJson = JsonConvert.DeserializeObject<AuthenticationResponse>(sr.ReadToEnd());
                             return new Exception(ErrorJson.ErrorMessage);
                         }
                     }
@@ -306,7 +306,7 @@ namespace KMCCC.Modules.Yggdrasil
 			try
 			{
 				var wc = new WebClient();
-				var requestBody = JsonMapper.ToJson(new AuthenticationRequest
+				var requestBody = JsonConvert.SerializeObject(new AuthenticationRequest
 				{
 					Agent = Agent.Minecraft,
 					Email = email,
@@ -324,7 +324,7 @@ namespace KMCCC.Modules.Yggdrasil
 							task.SetException(e.Error);
 							return;
 						}
-						var response = JsonMapper.ToObject<AuthenticationResponse>(e.Result);
+						var response = JsonConvert.DeserializeObject<AuthenticationResponse>(e.Result);
 						if ((response.AccessToken == null) || (response.SelectedProfile == null))
 						{
 							task.SetResult(false);
@@ -355,74 +355,74 @@ namespace KMCCC.Modules.Yggdrasil
 
 	public class RefreshRequest
 	{
-		[JsonPropertyName("agent")]
+		[JsonProperty("agent")]
 		public Agent Agent { get; set; }
 
-		[JsonPropertyName("accessToken")]
+		[JsonProperty("accessToken")]
 		public string AccessToken { get; set; }
 
-		[JsonPropertyName("requestUser")]
+		[JsonProperty("requestUser")]
 		public bool RequestUser { get; set; }
 
-		[JsonPropertyName("clientToken")]
+		[JsonProperty("clientToken")]
 		public string ClientToken { get; set; }
 	}
 
     public class ValidateRequest
     {
-        [JsonPropertyName("accessToken")]
+        [JsonProperty("accessToken")]
         public string AccessToken { get; set; }
 
-        [JsonPropertyName("clientToken")]
+        [JsonProperty("clientToken")]
         public string ClientToken { get; set; }
     }
 
 
     public class AuthenticationRequest
 	{
-		[JsonPropertyName("agent")]
+		[JsonProperty("agent")]
 		public Agent Agent { get; set; }
 
-		[JsonPropertyName("username")]
+		[JsonProperty("username")]
 		public string Email { get; set; }
 
-		[JsonPropertyName("password")]
+		[JsonProperty("password")]
 		public string Password { get; set; }
 
-		[JsonPropertyName("requestUser")]
+		[JsonProperty("requestUser")]
 		public bool RequestUser { get; set; }
 
-		[JsonPropertyName("clientToken")]
+		[JsonProperty("clientToken")]
 		public string ClientToken { get; set; }
 
-        [JsonPropertyName("token")]
+        [JsonProperty("token")]
         public string token { get; set; }
     }
 
 	public class AuthenticationResponse
 	{
-		[JsonPropertyName("clientToken")]
+		[JsonProperty("clientToken")]
 		public string ClientToken { get; set; }
 
-		[JsonPropertyName("accessToken")]
+		[JsonProperty("accessToken")]
 		public string AccessToken { get; set; }
 
-		[JsonPropertyName("availableProfiles")]
+		[JsonProperty("availableProfiles")]
 		public List<GameProfile> AvailableProfiles { get; set; }
 
-		[JsonPropertyName("selectedProfile")]
+		[JsonProperty("selectedProfile")]
 		public GameProfile SelectedProfile { get; set; }
 
-		[JsonPropertyName("user")]
+		[JsonProperty("user")]
 		public User User { get; set; }
 
-		[JsonPropertyName("error")]
+		[JsonProperty("error")]
 		public string Error { get; set; }
 
-		[JsonPropertyName("errorMessage")]
+		[JsonProperty("errorMessage")]
 		public string ErrorMessage { get; set; }
 
-		[JsonPropertyName("cause")]
+		[JsonProperty("cause")]
 		public string Cause { get; set; }
 	}
 
@@ -430,10 +430,10 @@ namespace KMCCC.Modules.Yggdrasil
 
     public class Error
     {
-        [JsonPropertyName("error")]
+        [JsonProperty("error")]
         public string ErrorType { get; set; }
 
-        [JsonPropertyName("errorMessage")]
+        [JsonProperty("errorMessage")]
         public string ErrorMessage { get; set; }
 
     }
@@ -442,40 +442,40 @@ namespace KMCCC.Modules.Yggdrasil
 	{
 		public static readonly Agent Minecraft = new Agent {Name = "Minecraft", Version = 1};
 
-		[JsonPropertyName("name")]
+		[JsonProperty("name")]
 		public string Name { get; set; }
 
-		[JsonPropertyName("version")]
+		[JsonProperty("version")]
 		public int Version { get; set; }
 	}
 
 	public class User
 	{
-		[JsonPropertyName("id")]
+		[JsonProperty("id")]
 		public string Id { get; set; }
 
-		[JsonPropertyName("properties")]
+		[JsonProperty("properties")]
 		public List<Property> Properties { get; set; }
 
-		[JsonPropertyName("legacy")]
+		[JsonProperty("legacy")]
 		public bool Legacy { get; set; }
 	}
 
 	public class Property
 	{
-		[JsonPropertyName("name")]
+		[JsonProperty("name")]
 		public string Name { get; set; }
 
-		[JsonPropertyName("value")]
+		[JsonProperty("value")]
 		public string Value { get; set; }
 	}
 
 	public class GameProfile
 	{
-		[JsonPropertyName("id")]
+		[JsonProperty("id")]
 		public string Id { get; set; }
 
-		[JsonPropertyName("name")]
+		[JsonProperty("name")]
 		public string Name { get; set; }
 	}
 

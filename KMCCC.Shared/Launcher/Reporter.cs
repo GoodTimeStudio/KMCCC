@@ -9,7 +9,7 @@
 	using System.Reflection;
 	using System.Text;
 	using System.Threading.Tasks;
-	using LitJson;
+	using Newtonsoft.Json;
 	using Tools;
 
 	#endregion
@@ -150,7 +150,7 @@
                     {
                         wc.Headers.Add("user-agent", _clientName);
                         wc.UploadString(LAUNCH_REPORT,
-                            JsonMapper.ToJson((_reportLevel == ReportLevel.Full)
+                            JsonConvert.SerializeObject((_reportLevel == ReportLevel.Full)
                                 ? new FullLaunchReport(core, result, options)
                                 : (_reportLevel == ReportLevel.Basic)
                                     ? new BasicLaunchReport(core, result, options)

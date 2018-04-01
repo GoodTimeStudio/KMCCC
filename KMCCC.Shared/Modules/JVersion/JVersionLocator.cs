@@ -6,7 +6,7 @@
 	using System.IO;
 	using System.Linq;
 	using Launcher;
-	using LitJson;
+	using Newtonsoft.Json;
 	using Tools;
 
 	#endregion
@@ -200,7 +200,7 @@
 		{
 			try
 			{
-				return JsonMapper.ToObject<JVersion>(File.ReadAllText(jsonPath));
+				return JsonConvert.DeserializeObject<JVersion>(File.ReadAllText(jsonPath));
 			}
 			catch
 			{

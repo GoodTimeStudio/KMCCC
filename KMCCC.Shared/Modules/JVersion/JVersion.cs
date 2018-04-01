@@ -1,10 +1,10 @@
 ﻿namespace KMCCC.Modules.JVersion
 {
-	#region
+    using Newtonsoft.Json;
+    #region
 
-	using System;
+    using System;
 	using System.Collections.Generic;
-	using LitJson;
 
 	#endregion
 
@@ -13,88 +13,88 @@
 	/// </summary>
 	public class JVersion
 	{
-		[JsonPropertyName("id")]
+		[JsonProperty("id")]
 		public string Id { get; set; }
 
-		[JsonPropertyName("time")]
+		[JsonProperty("time")]
 		public DateTime Time { get; set; }
 
-		[JsonPropertyName("releaseTime")]
+		[JsonProperty("releaseTime")]
 		public DateTime ReleaseTime { get; set; }
 
-		[JsonPropertyName("type")]
+		[JsonProperty("type")]
 		public string Type { get; set; }
 
-        [JsonPropertyName("minecraftArguments")]
+        [JsonProperty("minecraftArguments")]
         public string MinecraftArguments { get; set; }
 
-        [JsonPropertyName("arguments")]
+        [JsonProperty("arguments")]
         public JArguments arguments { get; set; }
 
-        [JsonPropertyName("minimumLauncherVersion")]
+        [JsonProperty("minimumLauncherVersion")]
 		public int MinimumLauncherVersion { get; set; }
 
-		[JsonPropertyName("libraries")]
+		[JsonProperty("libraries")]
 		public List<JLibrary> Libraries { get; set; }
 
-		[JsonPropertyName("mainClass")]
+		[JsonProperty("mainClass")]
 		public string MainClass { get; set; }
 
-		[JsonPropertyName("assets")]
+		[JsonProperty("assets")]
 		public string Assets { get; set; }
 
-		[JsonPropertyName("inheritsFrom")]
+		[JsonProperty("inheritsFrom")]
 		public string InheritsVersion { get; set; }
 
-		[JsonPropertyName("jar")]
+		[JsonProperty("jar")]
 		public string JarId { get; set; }
 	}
 
 	public class JLibrary
 	{
-		[JsonPropertyName("name")]
+		[JsonProperty("name")]
 		public string Name { get; set; }
 
-        [JsonPropertyName("url")]
+        [JsonProperty("url")]
         public string Url { get; set; }
 
-        [JsonPropertyName("natives")]
+        [JsonProperty("natives")]
 		public Dictionary<string, string> Natives { get; set; }
 
-		[JsonPropertyName("rules")]
+		[JsonProperty("rules")]
 		public List<JRule> Rules { get; set; }
 
-		[JsonPropertyName("extract")]
+		[JsonProperty("extract")]
 		public JExtract Extract { get; set; }
 	}
 
     public class JArguments
     {
-        [JsonPropertyName("game")]
+        [JsonProperty("game")]
         public object[] game { get; set; }
 
-        [JsonPropertyName("jvm")]
+        [JsonProperty("jvm")]
         public object[] jvm { get; set; }
     }
 
     public class JRule
 	{
-		[JsonPropertyName("action")]
+		[JsonProperty("action")]
 		public string Action { get; set; }
 
-		[JsonPropertyName("os")]
+		[JsonProperty("os")]
 		public JOperatingSystem OS { get; set; }
 	}
 
 	public class JOperatingSystem
 	{
-		[JsonPropertyName("name")]
+		[JsonProperty("name")]
 		public string Name { get; set; }
 	}
 
 	public class JExtract
 	{
-		[JsonPropertyName("exclude")]
+		[JsonProperty("exclude")]
 		public List<string> Exculde { get; set; }
 	}
 }

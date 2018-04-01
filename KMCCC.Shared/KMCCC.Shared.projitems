@@ -22,16 +22,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\LaunchMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\Reporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\Version.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\IJsonWrapper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonMapper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonMockWrapper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonPropertyName.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonReader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\JsonWriter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\Lexer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LitJson\ParserToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\JVersion\JVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\JVersion\JVersionLocator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\Minecraft\MinecraftPing.cs" />
