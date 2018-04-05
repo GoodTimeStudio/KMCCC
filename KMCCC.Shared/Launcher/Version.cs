@@ -111,7 +111,7 @@
         /// <summary>
         ///     checksums
         /// </summary>
-        public string[] checksums { get; set; }
+        public string checksum { get; set; }
 
         /// <summary>
         ///     serverreq
@@ -170,6 +170,13 @@
 		///     本机实现后缀
 		/// </summary>
 		public string NativeSuffix { get; set; }
+
+        /// <summary>
+        /// Jar下载url
+        /// </summary>
+        public string Url { get; set; }
+
+        public string checksum { get; set; }
 
 		/// <summary>
 		///     解压参数

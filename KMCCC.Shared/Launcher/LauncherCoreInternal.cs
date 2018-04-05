@@ -7,7 +7,8 @@
 	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
-	using System.Threading.Tasks;
+    using System.Security.Cryptography;
+    using System.Threading.Tasks;
 	using Tools;
 
 	#endregion
@@ -84,6 +85,34 @@
 				return new LaunchResult {Success = false, ErrorType = ErrorType.Unknown, ErrorMessage = "在生成参数时发生了意外的错误", Exception = exp};
 			}
 		}
+
+        internal bool CheckFileInternal(string filePath, string checksum, HashAlgorithm hash)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    return false;
+                }
+
+                using (FileStream stream = File.OpenRead(filePath))
+                {
+                    string inSHA1 = BitConverter.ToString(hash.ComputeHash(stream));
+                    inSHA1 = inSHA1.Replace("-", "");
+                    inSHA1 = inSHA1.ToLower();
+                    if (!string.Equals(inSHA1, checksum))
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
 		internal LaunchResult LaunchInternal(LaunchOptions options, params Action<MinecraftLaunchArguments>[] argumentsOperators)
 		{
