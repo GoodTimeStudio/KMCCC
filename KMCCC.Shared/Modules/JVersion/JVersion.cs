@@ -50,23 +50,59 @@
 		public string JarId { get; set; }
 	}
 
-	public class JLibrary
-	{
-		[JsonProperty("name")]
-		public string Name { get; set; }
+    public class JLibrary
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("natives")]
+        public Dictionary<string, string> Natives { get; set; }
+
+        [JsonProperty("rules")]
+        public List<JRule> Rules { get; set; }
+
+        [JsonProperty("extract")]
+        public JExtract Extract { get; set; }
+
+        [JsonProperty("downloads")]
+        public JLibraryDownloadsInfo DownloadsInfo { get; set; }
+    }
+
+    public class JLibraryDownloadsInfo
+    {
+        [JsonProperty("artifact")]
+        public JDownloadInfo Artifact;
+
+        [JsonProperty("classifiers")]
+        public JClassifiers Classifiers;
+    }
+
+    public class JClassifiers
+    {
+        [JsonProperty("natives-linux")]
+        public JDownloadInfo Linux;
+
+        [JsonProperty("natives-osx")]
+        public JDownloadInfo OSX;
+
+        [JsonProperty("natives-windows")]
+        public JDownloadInfo Windows;
+    }
+
+    public class JDownloadInfo
+    {
+        [JsonProperty("size")]
+        public int Size { get; set; }
+
+        [JsonProperty("sha1")]
+        public string SHA1 { get; set; }
+
+        [JsonProperty("path")]
+        public string Path { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
-
-        [JsonProperty("natives")]
-		public Dictionary<string, string> Natives { get; set; }
-
-		[JsonProperty("rules")]
-		public List<JRule> Rules { get; set; }
-
-		[JsonProperty("extract")]
-		public JExtract Extract { get; set; }
-	}
+    }
 
     public class JArguments
     {
