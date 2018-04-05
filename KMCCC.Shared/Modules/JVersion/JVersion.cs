@@ -66,6 +66,11 @@
 
         [JsonProperty("downloads")]
         public JLibraryDownloadsInfo DownloadsInfo { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
+        public string[] checksums { get; set; }
     }
 
     public class JLibraryDownloadsInfo
