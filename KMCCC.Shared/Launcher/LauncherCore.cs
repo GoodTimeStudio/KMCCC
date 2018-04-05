@@ -126,9 +126,13 @@
 
             foreach (Library library in version.Libraries)
             {
-                if (!CheckFileInternal(this.GetLibPath(library), library.SHA1, provider))
+                // TO-DO: support forge checksums
+                if (!string.IsNullOrWhiteSpace(library.SHA1))
                 {
-                    missing.Add(library);
+                    if (!CheckFileInternal(this.GetLibPath(library), library.SHA1, provider))
+                    {
+                        missing.Add(library);
+                    }
                 }
             }
 
@@ -152,9 +156,12 @@
 
             foreach (Native native in version.Natives)
             {
-                if (!CheckFileInternal(this.GetNativePath(native), native.checksum, provider))
+                if (!string.IsNullOrWhiteSpace(native.checksum))
                 {
-                    missing.Add(native);
+                    if (!CheckFileInternal(this.GetNativePath(native), native.checksum, provider))
+                    {
+                        missing.Add(native);
+                    }
                 }
             }
 
