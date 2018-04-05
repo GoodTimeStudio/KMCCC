@@ -126,7 +126,7 @@
 
             foreach (Library library in version.Libraries)
             {
-                if (!CheckFileInternal(this.GetLibPath(library), library.checksum, provider))
+                if (!CheckFileInternal(this.GetLibPath(library), library.SHA1, provider))
                 {
                     missing.Add(library);
                 }

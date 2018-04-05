@@ -136,14 +136,23 @@
 						{
 							continue;
 						}
-                        version.Libraries.Add(new Library
+                        Library tmp = new Library
                         {
                             NS = names[0],
                             Name = names[1],
-                            Version = names[2],
-                            Url = lib.DownloadsInfo.Artifact?.Url,
-                            checksum = lib.DownloadsInfo.Artifact?.SHA1
-						});
+                            Version = names[2]
+                        };
+                        if (lib.DownloadsInfo != null)
+                        {
+                            tmp.Url = lib.DownloadsInfo.Artifact?.Url;
+                            tmp.SHA1 = lib.DownloadsInfo.Artifact?.SHA1;
+                        }
+                        else
+                        {
+                            tmp.Url = lib.Url;
+                            tmp.checksums = lib.checksums;
+                        }
+                        version.Libraries.Add(tmp);
 					}
 					else
 					{
@@ -156,10 +165,17 @@
                             NS = names[0],
                             Name = names[1],
                             Version = names[2],
-                            NativeSuffix = lib.Natives["windows"].Replace("${arch}", SystemTools.GetArch()),
-                            Url = lib.DownloadsInfo.Classifiers?.Windows?.Url,
-                            checksum = lib.DownloadsInfo.Classifiers?.Windows?.SHA1
+                            NativeSuffix = lib.Natives["windows"].Replace("${arch}", SystemTools.GetArch())
 						};
+                        if (lib.DownloadsInfo != null)
+                        {
+                            native.Url = lib.DownloadsInfo?.Classifiers?.Windows?.Url;
+                            native.checksum = lib.DownloadsInfo?.Classifiers?.Windows?.SHA1;
+                        }
+                        else
+                        {
+                            native.Url = lib.Url;
+                        }
 						version.Natives.Add(native);
 						if (lib.Extract != null)
 						{

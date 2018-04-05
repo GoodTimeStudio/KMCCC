@@ -111,7 +111,9 @@
         /// <summary>
         ///     checksums
         /// </summary>
-        public string checksum { get; set; }
+        public string[] checksums { get; set; }
+
+        public string SHA1 { get; set; }
 
         /// <summary>
         ///     serverreq
