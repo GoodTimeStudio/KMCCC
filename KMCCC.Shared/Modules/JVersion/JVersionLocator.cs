@@ -117,6 +117,10 @@
                 version.Assets = jver.Assets;
 				version.MainClass = jver.MainClass;
 				version.JarId = jver.JarId;
+                version.ClientJarUrl = jver.Downloads?.Client?.Url;
+                version.ClientJarSHA1 = jver.Downloads?.Client?.SHA1;
+                version.ServerJarUrl = jver.Downloads?.Server?.Url;
+                version.ServerJarSHA1 = jver.Downloads?.Server?.SHA1;
 				version.Libraries = new List<Library>();
 				version.Natives = new List<Native>();
 				foreach (var lib in jver.Libraries)

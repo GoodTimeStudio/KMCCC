@@ -48,7 +48,20 @@
 
 		[JsonProperty("jar")]
 		public string JarId { get; set; }
-	}
+
+        [JsonProperty("downloads")]
+        public JVersionDownloadsInfo Downloads { get; set; }
+
+    }
+
+    public class JVersionDownloadsInfo
+    {
+        [JsonProperty("client")]
+        public JDownloadInfo Client;
+
+        [JsonProperty("server")]
+        public JDownloadInfo Server;
+    }
 
     public class JLibrary
     {

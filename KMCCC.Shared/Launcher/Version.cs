@@ -81,6 +81,20 @@
 		///     Jar文件（Id）
 		/// </summary>
 		public string JarId { get; set; }
+
+        /// <summary>
+        /// 客户端Jar下载Url
+        /// </summary>
+        public string ClientJarUrl { get; set; }
+
+        public string ClientJarSHA1 { get; set; }
+
+        /// <summary>
+        /// 服务端Jar下载Url
+        /// </summary>
+        public string ServerJarUrl { get; set; }
+
+        public string ServerJarSHA1 { get; set; }
 	}
 
 	/// <summary>
