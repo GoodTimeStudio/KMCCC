@@ -4,8 +4,7 @@
 
 	using System;
 	using System.Collections.Generic;
-    using System.Security.Cryptography;
-    using Tools;
+	using Tools;
 
 	#endregion
 
@@ -77,8 +76,6 @@
 		///     本地实现表
 		/// </summary>
 		public List<Native> Natives { get; set; }
-
-        public List<Asset> AssetsList { get; set; }
 
 		/// <summary>
 		///     Jar文件（Id）
@@ -203,28 +200,6 @@
 		public UnzipOptions Options { get; set; }
 	}
 
-    /// <summary>
-    ///     资源文件
-    /// </summary>
-    public class Asset
-    {
-        private const string URL = "http://resources.download.minecraft.net/";
-
-        public string Hash;
-
-        public int Size;
-
-        public string GetRelativePath()
-        {
-            return String.Format(@"{0}\{1}", Hash.Substring(0, 2), Hash);
-        }
-
-        public string GetDownloadUrl()
-        {
-            return String.Format(@"{0}{1}/{2}", URL, Hash.Substring(0, 2), Hash);
-        }
-    }
-
 	/// <summary>
 	///     找Item，自己看我不加注释了
 	/// </summary>
@@ -281,74 +256,5 @@
 			return String.Format(@"{0}\libraries\{1}\{2}\{3}\{2}-{3}-{4}.jar", core.GameRootPath, native.NS.Replace(".", "\\"), native.Name, native.Version,
 				native.NativeSuffix);
 		}
-
-        public static string GetAssetIndexPath(this LauncherCore core, Version version)
-        {
-            return String.Format(@"{0}\assets\indexes\{1}.json", core.GameRootPath, version.Assets); 
-        }
-
-        public static string GetAssetPath(this LauncherCore core, Asset asset)
-        {
-            return String.Format(@"{0}\assets\objects\{1}", core.GameRootPath, asset.GetRelativePath());
-        }
-
-        /// <summary>
-        /// 检查Libraries文件完整性
-        /// </summary>
-        /// <param name="version">被检查的版本</param>
-        /// <returns>缺失的Libraries文件</returns>
-        public static List<Library> CheckLibraries(this LauncherCore core, Version version)
-        {
-            if (version == null)
-            {
-                return null;
-            }
-
-            List<Library> missing = new List<Library>();
-            SHA1CryptoServiceProvider provider = new SHA1CryptoServiceProvider();
-
-            foreach (Library library in version.Libraries)
-            {
-                // TO-DO: support forge checksums
-                if (!string.IsNullOrWhiteSpace(library.SHA1))
-                {
-                    if (!core.CheckFileInternal(core.GetLibPath(library), library.SHA1, provider))
-                    {
-                        missing.Add(library);
-                    }
-                }
-            }
-
-            return missing;
-        }
-
-        /// <summary>
-        /// 检查Natives文件完整性
-        /// </summary>
-        /// <param name="version">被检查的版本</param>
-        /// <returns>缺失的Natives文件</returns>
-        public static List<Native> CheckNatives(this LauncherCore core, Version version)
-        {
-            if (version == null)
-            {
-                return null;
-            }
-
-            List<Native> missing = new List<Native>();
-            SHA1CryptoServiceProvider provider = new SHA1CryptoServiceProvider();
-
-            foreach (Native native in version.Natives)
-            {
-                if (!string.IsNullOrWhiteSpace(native.checksum))
-                {
-                    if (!core.CheckFileInternal(core.GetNativePath(native), native.checksum, provider))
-                    {
-                        missing.Add(native);
-                    }
-                }
-            }
-
-            return missing;
-        }
-    }
+	}
 }
