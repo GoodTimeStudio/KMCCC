@@ -109,65 +109,6 @@
 			return this.Report(LaunchInternal(options, argumentsOperators), options);
 		}
 
-        /// <summary>
-        /// 检查Libraries文件完整性
-        /// </summary>
-        /// <param name="version">被检查的版本</param>
-        /// <returns>缺失的Libraries文件</returns>
-        public List<Library> CheckLibraries(Version version)
-        {
-            if (version == null)
-            {
-                return null;
-            }
-
-            List<Library> missing = new List<Library>();
-            SHA1CryptoServiceProvider provider = new SHA1CryptoServiceProvider();
-
-            foreach (Library library in version.Libraries)
-            {
-                // TO-DO: support forge checksums
-                if (!string.IsNullOrWhiteSpace(library.SHA1))
-                {
-                    if (!CheckFileInternal(this.GetLibPath(library), library.SHA1, provider))
-                    {
-                        missing.Add(library);
-                    }
-                }
-            }
-
-            return missing;
-        }
-
-        /// <summary>
-        /// 检查Natives文件完整性
-        /// </summary>
-        /// <param name="version">被检查的版本</param>
-        /// <returns>缺失的Natives文件</returns>
-        public List<Native> CheckNatives(Version version)
-        {
-            if (version == null)
-            {
-                return null;
-            }
-
-            List<Native> missing = new List<Native>();
-            SHA1CryptoServiceProvider provider = new SHA1CryptoServiceProvider();
-
-            foreach (Native native in version.Natives)
-            {
-                if (!string.IsNullOrWhiteSpace(native.checksum))
-                {
-                    if (!CheckFileInternal(this.GetNativePath(native), native.checksum, provider))
-                    {
-                        missing.Add(native);
-                    }
-                }
-            }
-
-            return missing;
-        }
-
 		/// <summary>
 		///     游戏退出事件
 		/// </summary>

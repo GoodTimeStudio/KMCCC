@@ -50,17 +50,28 @@
 		public string JarId { get; set; }
 
         [JsonProperty("downloads")]
-        public JVersionDownloadsInfo Downloads { get; set; }
+        public JVersionDownloadsContent Downloads { get; set; }
 
+        [JsonProperty("assetIndex")]
+        public JAssetsIndexDownloadInfo AssetIndex;
     }
 
-    public class JVersionDownloadsInfo
+    public class JVersionDownloadsContent
     {
         [JsonProperty("client")]
         public JDownloadInfo Client;
 
         [JsonProperty("server")]
         public JDownloadInfo Server;
+    }
+
+    public class JAssetsIndexDownloadInfo : JDownloadInfo
+    {
+        [JsonProperty("id")]
+        public string Id;
+
+        [JsonProperty("totalSize")]
+        public int TotalSize;
     }
 
     public class JLibrary
@@ -78,7 +89,7 @@
         public JExtract Extract { get; set; }
 
         [JsonProperty("downloads")]
-        public JLibraryDownloadsInfo DownloadsInfo { get; set; }
+        public JLibraryDownloadsContent DownloadsInfo { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
@@ -86,7 +97,7 @@
         public string[] checksums { get; set; }
     }
 
-    public class JLibraryDownloadsInfo
+    public class JLibraryDownloadsContent
     {
         [JsonProperty("artifact")]
         public JDownloadInfo Artifact;

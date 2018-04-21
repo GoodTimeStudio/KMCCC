@@ -7,7 +7,8 @@
 	using System.Linq;
 	using Launcher;
 	using Newtonsoft.Json;
-	using Tools;
+    using Newtonsoft.Json.Linq;
+    using Tools;
 
 	#endregion
 
@@ -206,6 +207,29 @@
 						version.Libraries.AddRange(target.Libraries);
 					}
 				}
+
+                //assets
+                string json = File.ReadAllText(_core.GetAssetIndexPath(version));
+                JObject rootObj = JObject.Parse(json)["objects"].ToObject<JObject>();
+                foreach(JObject obj in rootObj.Values<JObject>())
+                {
+                    string hash = obj["hash"].ToString();
+                    int size;
+                    int.TryParse(obj["size"].ToString(), out size);
+
+                    if (string.IsNullOrWhiteSpace(hash))
+                    {
+                        continue;
+                    }
+
+                    Asset asset = new Asset
+                    {
+                        Hash = hash,
+                        Size = size
+                    };
+                    version.AssetsList.Add(asset);
+                }
+
 				version.JarId = version.JarId ?? version.Id;
 				_versions.Add(version.Id, version);
 				return version;
