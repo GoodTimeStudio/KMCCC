@@ -115,6 +115,12 @@
                 version.Type = jver.Type;
                 version.MinecraftArguments = jver.MinecraftArguments ?? UsefulTools.PrintfArray(jver.arguments.game);
                 version.Assets = jver.Assets;
+                version.AssetIndexInfo = new AssetIndex
+                {
+                    Id = jver.Assets,
+                    SHA1 = jver.AssetIndex?.SHA1,
+                    Url = jver.AssetIndex?.Url
+                };
 				version.MainClass = jver.MainClass;
 				version.JarId = jver.JarId;
                 version.ClientJarUrl = jver.Downloads?.Client?.Url;

@@ -6,24 +6,24 @@
     using System;
 	using System.Collections.Generic;
 
-	#endregion
+    #endregion
 
-	/// <summary>
-	///     用来Json的实体类
-	/// </summary>
-	public class JVersion
-	{
-		[JsonProperty("id")]
-		public string Id { get; set; }
+    /// <summary>
+    ///     用来Json的实体类
+    /// </summary>
+    public class JVersion
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
-		[JsonProperty("time")]
-		public DateTime Time { get; set; }
+        [JsonProperty("time")]
+        public DateTime Time { get; set; }
 
-		[JsonProperty("releaseTime")]
-		public DateTime ReleaseTime { get; set; }
+        [JsonProperty("releaseTime")]
+        public DateTime ReleaseTime { get; set; }
 
-		[JsonProperty("type")]
-		public string Type { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
         [JsonProperty("minecraftArguments")]
         public string MinecraftArguments { get; set; }
@@ -32,25 +32,28 @@
         public JArguments arguments { get; set; }
 
         [JsonProperty("minimumLauncherVersion")]
-		public int MinimumLauncherVersion { get; set; }
+        public int MinimumLauncherVersion { get; set; }
 
-		[JsonProperty("libraries")]
-		public List<JLibrary> Libraries { get; set; }
+        [JsonProperty("libraries")]
+        public List<JLibrary> Libraries { get; set; }
 
-		[JsonProperty("mainClass")]
-		public string MainClass { get; set; }
+        [JsonProperty("mainClass")]
+        public string MainClass { get; set; }
 
-		[JsonProperty("assets")]
-		public string Assets { get; set; }
+        [JsonProperty("assets")]
+        public string Assets { get; set; }
 
-		[JsonProperty("inheritsFrom")]
-		public string InheritsVersion { get; set; }
+        [JsonProperty("inheritsFrom")]
+        public string InheritsVersion { get; set; }
 
-		[JsonProperty("jar")]
-		public string JarId { get; set; }
+        [JsonProperty("jar")]
+        public string JarId { get; set; }
 
         [JsonProperty("downloads")]
         public JVersionDownloadsInfo Downloads { get; set; }
+
+        [JsonProperty("assetIndex")]
+        public JDownloadInfo AssetIndex { get; set; }
 
     }
 

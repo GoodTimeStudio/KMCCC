@@ -62,6 +62,8 @@
         /// </summary>
         public string Assets { get; set; }
 
+        public AssetIndex AssetIndexInfo { get; set; }
+
 		/// <summary>
 		///     主类
 		/// </summary>
@@ -199,6 +201,21 @@
 		/// </summary>
 		public UnzipOptions Options { get; set; }
 	}
+
+    public class AssetIndex
+    {
+        /// <summary>
+        /// 资源名
+        /// </summary>
+        public string Id { get; set; }
+
+        public string SHA1 { get; set; }
+
+        /// <summary>
+        /// 下载Url
+        /// </summary>
+        public string Url { get; set; }
+    }
 
 	/// <summary>
 	///     找Item，自己看我不加注释了
