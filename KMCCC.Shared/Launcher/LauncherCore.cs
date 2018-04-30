@@ -110,6 +110,41 @@
 		}
 
         /// <summary>
+        /// 检查文件完整性
+        /// </summary>
+        /// <param name="filePath">文件路径</param>
+        /// <param name="checksum">校检值</param>
+        /// <param name="hash">算法</param>
+        /// <returns></returns>
+        public bool CheckFileHash(string filePath, string checksum, HashAlgorithm hash)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    return false;
+                }
+
+                using (FileStream stream = File.OpenRead(filePath))
+                {
+                    string inSHA1 = BitConverter.ToString(hash.ComputeHash(stream));
+                    inSHA1 = inSHA1.Replace("-", "");
+                    inSHA1 = inSHA1.ToLower();
+                    if (!string.Equals(inSHA1, checksum))
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// 检查Libraries文件完整性
         /// </summary>
         /// <param name="version">被检查的版本</param>
@@ -129,7 +164,7 @@
                 // TO-DO: support forge checksums
                 if (!string.IsNullOrWhiteSpace(library.SHA1))
                 {
-                    if (!CheckFileInternal(this.GetLibPath(library), library.SHA1, provider))
+                    if (!CheckFileHash(this.GetLibPath(library), library.SHA1, provider))
                     {
                         missing.Add(library);
                     }
@@ -158,7 +193,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(native.checksum))
                 {
-                    if (!CheckFileInternal(this.GetNativePath(native), native.checksum, provider))
+                    if (!CheckFileHash(this.GetNativePath(native), native.checksum, provider))
                     {
                         missing.Add(native);
                     }
