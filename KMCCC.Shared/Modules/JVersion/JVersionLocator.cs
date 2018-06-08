@@ -7,7 +7,8 @@
 	using System.Linq;
 	using Launcher;
 	using Newtonsoft.Json;
-	using Tools;
+    using Newtonsoft.Json.Linq;
+    using Tools;
 
 	#endregion
 
@@ -140,7 +141,7 @@
 					{
 						continue;
 					}
-					if (lib.Natives == null)
+					if (lib.Natives == null) //Library
 					{
 						if (!IfAllowed(lib.Rules))
 						{
@@ -164,7 +165,7 @@
                         }
                         version.Libraries.Add(tmp);
 					}
-					else
+					else //Native
 					{
 						if (!IfAllowed(lib.Rules))
 						{
@@ -177,10 +178,14 @@
                             Version = names[2],
                             NativeSuffix = lib.Natives["windows"].Replace("${arch}", SystemTools.GetArch())
 						};
-                        if (lib.DownloadsInfo != null)
+                        if (lib.DownloadsInfo != null && lib.DownloadsInfo.ClassifiersInternal != null)
                         {
-                            native.Url = lib.DownloadsInfo?.Classifiers?.Windows?.Url;
-                            native.checksum = lib.DownloadsInfo?.Classifiers?.Windows?.SHA1;
+                            JToken obj = null;
+                            lib.DownloadsInfo.ClassifiersInternal.TryGetValue(native.NativeSuffix, out obj);
+                            JDownloadInfo info = obj?.ToObject<JDownloadInfo>();
+
+                            native.Url = info?.Url;
+                            native.checksum = info?.SHA1;
                         }
                         else
                         {

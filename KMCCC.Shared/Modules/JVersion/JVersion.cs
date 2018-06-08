@@ -1,10 +1,13 @@
 ﻿namespace KMCCC.Modules.JVersion
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Serialization;
     #region
 
     using System;
 	using System.Collections.Generic;
+    using System.Reflection;
 
     #endregion
 
@@ -95,18 +98,18 @@
         public JDownloadInfo Artifact;
 
         [JsonProperty("classifiers")]
+        public JObject ClassifiersInternal;
+
+        [JsonIgnore]
         public JClassifiers Classifiers;
     }
 
     public class JClassifiers
     {
-        [JsonProperty("natives-linux")]
         public JDownloadInfo Linux;
 
-        [JsonProperty("natives-osx")]
         public JDownloadInfo OSX;
 
-        [JsonProperty("natives-windows")]
         public JDownloadInfo Windows;
     }
 

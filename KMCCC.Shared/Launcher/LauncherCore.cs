@@ -162,12 +162,9 @@
             foreach (Library library in version.Libraries)
             {
                 // TO-DO: support forge checksums
-                if (!string.IsNullOrWhiteSpace(library.SHA1))
+                if (!CheckFileHash(this.GetLibPath(library), library.SHA1, provider))
                 {
-                    if (!CheckFileHash(this.GetLibPath(library), library.SHA1, provider))
-                    {
-                        missing.Add(library);
-                    }
+                    missing.Add(library);
                 }
             }
 
@@ -191,12 +188,9 @@
 
             foreach (Native native in version.Natives)
             {
-                if (!string.IsNullOrWhiteSpace(native.checksum))
+                if (!CheckFileHash(this.GetNativePath(native), native.checksum, provider))
                 {
-                    if (!CheckFileHash(this.GetNativePath(native), native.checksum, provider))
-                    {
-                        missing.Add(native);
-                    }
+                    missing.Add(native);
                 }
             }
 
