@@ -1,13 +1,11 @@
 ﻿namespace KMCCC.Modules.JVersion
 {
+    #region
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
-    #region
-
     using System;
 	using System.Collections.Generic;
-    using System.Reflection;
 
     #endregion
 
@@ -28,6 +26,9 @@
         [JsonProperty("type")]
         public string Type { get; set; }
 
+        [JsonProperty("downloads")]
+        public JDownloads Downloads { get; set; }
+
         [JsonProperty("minecraftArguments")]
         public string MinecraftArguments { get; set; }
 
@@ -46,27 +47,45 @@
         [JsonProperty("assets")]
         public string Assets { get; set; }
 
+        [JsonProperty("assetIndex")]
+        public JFileInfo AssetsIndex { get; set; }
+
         [JsonProperty("inheritsFrom")]
-        public string InheritsVersion { get; set; }
+		public string InheritsVersion { get; set; }
 
         [JsonProperty("jar")]
         public string JarId { get; set; }
 
-        [JsonProperty("downloads")]
-        public JVersionDownloadsInfo Downloads { get; set; }
-
-        [JsonProperty("assetIndex")]
-        public JDownloadInfo AssetIndex { get; set; }
-
     }
 
-    public class JVersionDownloadsInfo
+    public class JFileInfo
+    {
+        [JsonProperty("id")]
+        public string ID { get; set; }
+
+        [JsonProperty("sha1")]
+        public string SHA1 { get; set; }
+
+        [JsonProperty("size")]
+        public int Size { get; set; }
+
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
+        [JsonProperty("path")]
+        public string Path { get; set; }
+
+        [JsonProperty("totalSize")]
+        public int TotalSize { get; set; }
+    }
+
+    public class JDownloads
     {
         [JsonProperty("client")]
-        public JDownloadInfo Client;
+        public JFileInfo Client { get; set; }
 
         [JsonProperty("server")]
-        public JDownloadInfo Server;
+        public JFileInfo Server { get; set; }
     }
 
     public class JLibrary
