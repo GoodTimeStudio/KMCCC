@@ -1,70 +1,22 @@
 ﻿namespace KMCCC.Tools
 {
-	#region
+    #region
 
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.IO.Packaging;
-	using System.Linq;
-	using System.Reflection;
-	using System.Text;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Text;
 
-	#endregion
+    #endregion
 
-	/// <summary>
-	///     操蛋的通过反射调用Zip解压
-	/// </summary>
-	public static class ZipTools
+    /// <summary>
+    ///     操蛋的通过反射调用Zip解压
+    /// </summary>
+    public static class ZipTools
 	{
-		public static readonly Boolean Enabled;
-
-		public static readonly Type ZipArchive;
-
-		public static readonly MethodInfo ZipArchive_OpenOnFile;
-
-		public static readonly MethodInfo ZipArchive_GetFiles;
-
-		public static readonly FieldInfo ZipArchive_ZipIOBlockManager;
-
-		public static readonly Type ZipFileInfo;
-
-		public static readonly MethodInfo ZipFileInfo_GetStream;
-
-		public static readonly PropertyInfo ZipFileInfo_Name;
-
-		public static readonly PropertyInfo ZipFileInfo_FolderFlag;
-
-		public static readonly Type ZipIOBlockManager;
-
-		public static readonly FieldInfo ZipIOBlockManager_Encoding;
-
-		static ZipTools()
-		{
-			try
-			{
-				var windowsBase = typeof (Package).Assembly;
-				ZipArchive = windowsBase.GetType("MS.Internal.IO.Zip.ZipArchive");
-				ZipArchive_OpenOnFile = ZipArchive.GetMethod("OpenOnFile", BindingFlags.NonPublic | BindingFlags.Static);
-				ZipArchive_GetFiles = ZipArchive.GetMethod("GetFiles", BindingFlags.NonPublic | BindingFlags.Instance);
-				ZipArchive_ZipIOBlockManager = ZipArchive.GetField("_blockManager", BindingFlags.NonPublic | BindingFlags.Instance);
-
-				ZipFileInfo = windowsBase.GetType("MS.Internal.IO.Zip.ZipFileInfo");
-				ZipFileInfo_GetStream = ZipFileInfo.GetMethod("GetStream", BindingFlags.NonPublic | BindingFlags.Instance);
-				ZipFileInfo_Name = ZipFileInfo.GetProperty("Name", BindingFlags.NonPublic | BindingFlags.Instance);
-				ZipFileInfo_FolderFlag = ZipFileInfo.GetProperty("FolderFlag", BindingFlags.NonPublic | BindingFlags.Instance);
-
-				ZipIOBlockManager = windowsBase.GetType("MS.Internal.IO.Zip.ZipIOBlockManager");
-				ZipIOBlockManager_Encoding = ZipIOBlockManager.GetField("_encoding", BindingFlags.NonPublic | BindingFlags.Instance);
-
-				Enabled = true;
-			}
-			catch
-			{
-				Enabled = false;
-			}
-		}
 
 		public static bool Unzip(string zipFile, string outputDirectory, UnzipOptions options)
 		{
@@ -79,12 +31,12 @@
 				var root = new DirectoryInfo(outputDirectory);
 				root.Create();
 				var rootPath = root.FullName + "/";
-				using (var zip = (IDisposable) ZipArchive_OpenOnFile.Invoke(null, new object[] {zipFile, FileMode.Open, FileAccess.Read, FileShare.Read, false}))
+                
+				using (var zip = ZipFile.Open(zipFile, ZipArchiveMode.Read, options.Encoding ?? Encoding.Default))
 				{
-					var ioManager = ZipArchive_ZipIOBlockManager.GetValue(zip);
-					ZipIOBlockManager_Encoding.SetValue(ioManager, new WarpedEncoding(options.Encoding ?? Encoding.Default));
-
-					var files = (IEnumerable) ZipArchive_GetFiles.Invoke(zip, new object[] {});
+                    //var ioManager = ZipArchive_ZipIOBlockManager.GetValue(zip);
+                    //ZipIOBlockManager_Encoding.SetValue(ioManager, new WarpedEncoding(options.Encoding ?? Encoding.Default));
+                    var files = zip.Entries;
 					IEnumerable<string> exclude = (options.Exclude ?? new List<string>());
 					if (exclude.Count() > 1000)
 					{
@@ -93,26 +45,21 @@
 
 					foreach (var item in files)
 					{
-						var name = (string) ZipFileInfo_Name.GetValue(item, null);
+                        var name = item.FullName;
 						if (exclude.Any(name.StartsWith))
 						{
 							continue;
 						}
-						if ((bool) ZipFileInfo_FolderFlag.GetValue(item, null) || name.Last() == '/')
+
+                        // Determine whether the entry is a directory
+                        if (name.Last() == '/')
                         {
-							Directory.CreateDirectory(rootPath + name);
-							continue;
-						}
-						using (var stream = (Stream) ZipFileInfo_GetStream.Invoke(item, new object[] {FileMode.Open, FileAccess.Read}))
-						{
-							var filePath = rootPath + name;
-							var directoryInfo = new FileInfo(filePath).Directory;
-							if (directoryInfo != null) directoryInfo.Create();
-							using (var fs = new FileStream(filePath, FileMode.Create))
-							{
-								stream.CopyTo(fs);
-							}
-						}
+                            Directory.CreateDirectory(rootPath + name);
+                            continue;
+                        }
+
+                        var filePath = rootPath + name;
+                        item.ExtractToFile(filePath, true);
 					}
 				}
 				return null;
