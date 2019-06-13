@@ -20,7 +20,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\LaunchHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\LaunchHandleExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\LaunchMode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Launcher\Reporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Launcher\Version.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\JVersion\JVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Modules\JVersion\JVersionLocator.cs" />
