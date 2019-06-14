@@ -12,9 +12,6 @@
 
     #endregion
 
-    /// <summary>
-    ///     操蛋的通过反射调用Zip解压
-    /// </summary>
     public static class ZipTools
 	{
 
@@ -34,8 +31,6 @@
                 
 				using (var zip = ZipFile.Open(zipFile, ZipArchiveMode.Read, options.Encoding ?? Encoding.Default))
 				{
-                    //var ioManager = ZipArchive_ZipIOBlockManager.GetValue(zip);
-                    //ZipIOBlockManager_Encoding.SetValue(ioManager, new WarpedEncoding(options.Encoding ?? Encoding.Default));
                     var files = zip.Entries;
 					IEnumerable<string> exclude = (options.Exclude ?? new List<string>());
 					if (exclude.Count() > 1000)
