@@ -12,10 +12,9 @@ Shared Code Between KMCCC.Basic & KMCCC.Pro
 - Basic Launch Model (LauncherCore, LaunchOptions, ...)
 - Authentication Model (Yggdrasil, Offline, ...)
 - Java & System Information Finder
-- Zip Module using .Net Internal API ( MS.Internal.IO.Zip.* )
+- Zip Module
 - Basic VersionLocator (JVersion)
 - A set of useful extensions
-- A launch reporter that can be disabled
 - Custom authentication server
 
 ## KMCCC
