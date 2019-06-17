@@ -4,8 +4,6 @@ KMCCC
 [![Join the chat at https://gitter.im/MineStudio/KMCCC](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/MineStudio/KMCCC?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build status](https://ci.appveyor.com/api/projects/status/ldvo1wsyd66boxsf?svg=true)](https://ci.appveyor.com/project/zhouyiran2/kmccc)
 
-如果你需要中文的介绍信息，请打开README_CN.md
-
 An OpenSource Minecraft Launcher for .Net Developers
 
 ## KMCCC.Shared
@@ -23,7 +21,7 @@ Shared Code Between KMCCC.Basic & KMCCC.Pro
 - A launch reporter that can be disabled
 - Custom authentication server
 
-## KMCCC.Basic
+## KMCCC
 
 Basic Version of KMCCC
 
@@ -31,22 +29,6 @@ Basic Version of KMCCC
 
 - Everything in kMCCC.Shared
 - No more
-
-## KMCCC.Pro
-
-Professional Version of KMCCC
-
-### Included:
-
-- Everything in KMCCC.Shared
-- Mojang API
-- [WIP] Game File Download & Fix & Check (Including Version, Library, Native&Assets)
-- [WIP] More useful extensions for LaunchHandle
-- [WIP] More useful libraries that a launch might need.
-
-## Plan
-
-We plan to delay some parameter settings, (such as versionLocator) and make more features available in KMCCC.Pro
 
 # Sample
 
@@ -90,16 +72,6 @@ var result = core.Launch(new LaunchOptions
 	Server = new ServerInfo {Address = "mc.hypixel.net"}, //optional
 	Size = new WindowSize {Height = 768, Width = 1280} //optional
 }, (Action<MinecraftLaunchArguments>) (x => { })); // optional ( modify arguments before launching
-```
-
-## Using anonymous report ##
-
-```csharp
-Reporter.SetClientName("Your launcher's name"); // set name
-Reporter.SetReportLevel(ReportLevel.Full); // full report
-//Reporter.SetReportLevel(ReportLevel.Basic); // basic report
-//Reporter.SetReportLevel(ReportLevel.Min); // simplified report
-//Reporter.SetReportLevel(ReportLevel.None); // turn off
 ```
 
 # Enjoy!
