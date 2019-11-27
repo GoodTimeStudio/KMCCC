@@ -147,6 +147,8 @@
                 version.Assets = jver.Assets;
 				version.MainClass = jver.MainClass;
 				version.JarId = jver.JarId;
+                version.Time = jver.Time;
+                version.ReleaseTime = jver.ReleaseTime;
 				version.Libraries = new List<Library>();
 				version.Natives = new List<Native>();
 				foreach (var lib in jver.Libraries)

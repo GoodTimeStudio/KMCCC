@@ -72,6 +72,10 @@
         /// </summary>
         public string MainClass { get; set; }
 
+        public DateTime Time { get; set; }
+
+        public DateTime ReleaseTime { get; set; }
+
 		/// <summary>
 		///     库列表
 		/// </summary>
